@@ -26,9 +26,25 @@ node server.js
 
 ```
 @echo off
-cd <システムを配置したディレクトリ>
-node server.js
+<ここにシステムを格納したパスを記載>
+:: server.jsの存在を確認
+if not exist server.js (
+    echo ここにサーバーはないので別の場所を探してね。
+    pause
+    exit
+)
+
+:: Node.jsサーバーをバックグラウンドで実行
+start "" cmd /c "node server.js"
+
+:: 少し待機してからブラウザを開く（サーバー起動時間を考慮）
+timeout /t 2 /nobreak >nul
+
+:: デフォルトブラウザでローカルホストを開く
 start "" http://localhost:3000
+
+:: プロセスが続行するようにする（任意）
+echo Server is running. Press any key to close this window.
 pause
 ```
 
